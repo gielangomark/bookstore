@@ -6,45 +6,43 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
 {
-    // 1. Tabel CARTS
+    
     Schema::create('carts', function (Blueprint $table) {
-        $table->id(); // id PK
-        $table->foreignId('user_id')->constrained('users'); // FK
-        $table->foreignId('book_id')->constrained('books'); // FK
+        $table->id(); 
+        $table->foreignId('user_id')->constrained('users'); 
+        $table->foreignId('book_id')->constrained('books'); 
         $table->integer('quantity');
-        $table->timestamp('created_at')->useCurrent(); // Gambar minta created_at
+        $table->timestamp('created_at')->useCurrent(); 
         $table->timestamp('updated_at')->nullable();
     });
 
-    // 2. Tabel ORDERS
+    
     Schema::create('orders', function (Blueprint $table) {
-        $table->id(); // id PK
-        $table->foreignId('user_id')->constrained('users'); // FK
+        $table->id(); 
+        $table->foreignId('user_id')->constrained('users'); 
         $table->string('order_number')->unique();
         $table->decimal('total_amount', 12, 2);
         $table->text('shipping_address');
-        $table->enum('payment_method', ['transfer', 'cod']); // Contoh opsi
+        $table->enum('payment_method', ['transfer', 'cod']); 
         $table->string('payment_proof')->nullable();
         $table->enum('status', ['pending', 'paid', 'shipped', 'completed', 'cancelled']);
         $table->text('notes')->nullable();
-        $table->timestamp('created_at')->useCurrent(); // Gambar minta created_at
+        $table->timestamp('created_at')->useCurrent(); 
         $table->timestamp('updated_at')->nullable();
     });
 
-    // 3. Tabel ORDER_ITEMS
+    
     Schema::create('order_items', function (Blueprint $table) {
-        $table->id(); // id PK
-        $table->foreignId('order_id')->constrained('orders'); // FK
-        $table->foreignId('book_id')->constrained('books');   // FK
+        $table->id(); 
+        $table->foreignId('order_id')->constrained('orders'); 
+        $table->foreignId('book_id')->constrained('books');   
         $table->integer('quantity');
         $table->decimal('price', 12, 2);
         $table->decimal('subtotal', 12, 2);
-        // Di gambar ERD tabel ini tidak ada kolom timestamp, jadi kita tidak buat.
+        
     });
 }
 

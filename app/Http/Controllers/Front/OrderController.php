@@ -10,9 +10,9 @@ class OrderController extends Controller
 {
     public function index()
     {
-        // Ambil order milik user yang sedang login saja
+        
         $orders = Order::where('user_id', Auth::id())
-                       ->with('items.book') // Load detail buku biar bisa ditampilkan
+                       ->with('items.book') 
                        ->latest()
                        ->get();
 

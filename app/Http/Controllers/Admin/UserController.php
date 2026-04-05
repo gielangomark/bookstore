@@ -6,24 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth; // <--- TAMBAHAN: Import Auth Facade
+use Illuminate\Support\Facades\Auth; 
 
 class UserController extends Controller
 {
-    // 1. Tampilkan Daftar User
+    
     public function index()
     {
         $users = User::latest()->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
-    // 2. Form Tambah User
+    
     public function create()
     {
         return view('admin.users.create');
     }
 
-    // 3. Proses Simpan User Baru
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -45,13 +45,13 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User berhasil ditambahkan!');
     }
 
-    // 4. Form Edit User
+    
     public function edit(User $user)
     {
         return view('admin.users.edit', compact('user'));
     }
 
-    // 5. Proses Update User
+    
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -77,10 +77,10 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'Data user berhasil diperbarui!');
     }
 
-    // 6. Hapus User
+    
     public function destroy(User $user)
     {
-        // PERBAIKAN DISINI: Gunakan Auth::id() agar VS Code tidak error merah
+        
         if ($user->id == Auth::id()) {
             return back()->with('error', 'Anda tidak bisa menghapus akun sendiri!');
         }

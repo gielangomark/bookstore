@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. BUAT USER & ADMIN
+        
         User::create([
             'name' => 'Admin Toko',
             'email' => 'admin@tokobuku.com',
@@ -31,15 +31,15 @@ class DatabaseSeeder extends Seeder
             'address' => 'Jl. Mawar No. 12, Jakarta Selatan',
         ]);
 
-        // 2. BUAT KATEGORI
+        
         $catFinance = Category::create(['name' => 'Finance & Investing']);
         $catSelfDev = Category::create(['name' => 'Self Development']);
         $catTech = Category::create(['name' => 'Technology']);
         $catNovel = Category::create(['name' => 'Novel & Sastra']);
 
-        // 3. DAFTAR 20 BUKU (Dominan Finance)
+        
         $books = [
-            // --- KATEGORI FINANCE (12 Buku) ---
+            
             [
                 'title' => 'The Psychology of Money',
                 'category_id' => $catFinance->id,
@@ -173,7 +173,7 @@ class DatabaseSeeder extends Seeder
                 'cover_image' => 'https://placehold.co/400x600/be123c/FFF?text=Financial+Freedom',
             ],
 
-            // --- KATEGORI SELF DEVELOPMENT (3 Buku) ---
+            
             [
                 'title' => 'Atomic Habits',
                 'category_id' => $catSelfDev->id,
@@ -208,7 +208,7 @@ class DatabaseSeeder extends Seeder
                 'cover_image' => 'https://placehold.co/400x600/0ea5e9/FFF?text=7+Habits',
             ],
 
-            // --- KATEGORI TECH (3 Buku) ---
+            
             [
                 'title' => 'Clean Code',
                 'category_id' => $catTech->id,
@@ -243,7 +243,7 @@ class DatabaseSeeder extends Seeder
                 'cover_image' => 'https://placehold.co/400x600/ef4444/FFF?text=Mastering+Laravel',
             ],
 
-            // --- KATEGORI NOVEL (2 Buku) ---
+            
             [
                 'title' => 'Laut Bercerita',
                 'category_id' => $catNovel->id,
@@ -268,7 +268,7 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
-        // 4. EKSEKUSI LOOPING
+        
         foreach ($books as $book) {
             Book::create($book);
         }

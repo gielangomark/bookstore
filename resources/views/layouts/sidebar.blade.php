@@ -30,6 +30,13 @@
                 Pesanan Masuk
             </a>
 
+                <a href="{{ route('admin.messages.index') }}" 
+                    class="flex items-center px-4 py-3 text-sm font-medium rounded-md transition-colors duration-200 
+                    {{ request()->routeIs('admin.messages.*') ? 'bg-indigo-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                     <i class="fa-solid fa-envelope mr-3 text-lg"></i>
+                     Pesan Masuk
+                </a>
+
             <a href="{{ route('admin.users.index') }}" 
                class="flex items-center px-4 py-3 text-sm font-medium rounded-md transition-colors duration-200 
                {{ request()->routeIs('admin.users.*') ? 'bg-indigo-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">

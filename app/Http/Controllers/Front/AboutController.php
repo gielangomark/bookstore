@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 
-class PageController extends Controller
+class AboutController extends Controller
 {
-    public function about()
+    public function index()
     {
         return view('front.about');
     }
@@ -16,13 +16,13 @@ class PageController extends Controller
     public function storeMessage(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:100',
-            'email' => 'required|email|max:150',
-            'message' => 'required|string|max:1000',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'message' => 'required|string|min:10',
         ]);
 
         ContactMessage::create($validated);
 
-        return back()->with('success', 'Pesan berhasil dikirim. Tim kami akan membalas secepatnya.');
+        return redirect()->route('about')->with('success', 'Terima kasih! Pesan Anda telah kami terima. Admin akan segera merespons.');
     }
 }

@@ -4,60 +4,121 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tentang Kami - TokoBuku</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-50 font-sans antialiased text-gray-800">
 
     <nav class="bg-white shadow-sm sticky top-0 z-50 font-sans">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
+            <div class="flex justify-between items-center h-16">
                 
-                <div class="flex items-center gap-8">
-                    <a href="{{ route('home') }}" class="font-bold text-2xl text-indigo-600 flex items-center gap-2 hover:opacity-80 transition">
-                        <span>📚</span> TokoBuku
+                <!-- Logo -->
+                <a href="{{ route('home') }}" class="font-bold text-xl sm:text-2xl text-indigo-600 flex items-center gap-2 hover:opacity-80 transition flex-shrink-0">
+                    <span>📚</span> <span class="hidden xs:inline">TokoBuku</span>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="{{ route('home') }}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition {{ request()->routeIs('home') ? 'text-indigo-600' : '' }}">
+                        Beranda
                     </a>
-                    
-                    <div class="hidden md:flex items-center space-x-6">
-                        <a href="{{ route('home') }}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition {{ request()->routeIs('home') ? 'text-indigo-600' : '' }}">
-                            Beranda
-                        </a>
-                        <a href="{{ route('about') }}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition {{ request()->routeIs('about') ? 'text-indigo-600' : '' }}">
-                            Tentang Kami
-                        </a>
-                    </div>
+                    <a href="{{ route('about') }}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition {{ request()->routeIs('about') ? 'text-indigo-600' : '' }}">
+                        Tentang Kami
+                    </a>
                 </div>
 
-                <div class="flex items-center space-x-4 md:space-x-6">
+                <!-- Right Side Icons -->
+                <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
                     @auth
-                        <a href="{{ route('cart.index') }}" class="text-gray-500 hover:text-indigo-600 font-medium flex items-center gap-1 transition relative group">
+                        <a href="{{ route('cart.index') }}" class="text-gray-500 hover:text-indigo-600 font-medium flex items-center gap-1 transition" title="Keranjang">
                             <i class="fa-solid fa-cart-shopping text-lg"></i>
-                            <span class="hidden sm:inline text-sm">Keranjang</span>
+                            <span class="hidden sm:inline text-xs md:text-sm">Keranjang</span>
                         </a>
                         
-                        <a href="{{ route('my-orders.index') }}" class="text-gray-500 hover:text-indigo-600 font-medium flex items-center gap-1 transition">
+                        <a href="{{ route('my-orders.index') }}" class="text-gray-500 hover:text-indigo-600 font-medium flex items-center gap-1 transition hidden sm:flex" title="Pesanan Saya">
                             <i class="fa-solid fa-box text-lg"></i>
-                            <span class="hidden sm:inline text-sm">Pesanan Saya</span>
+                            <span class="hidden md:inline text-xs md:text-sm">Pesanan Saya</span>
                         </a>
 
-                        <div class="h-6 w-px bg-gray-300 hidden sm:block"></div>
+                        <div class="h-6 w-px bg-gray-300 hidden md:block"></div>
 
-                        <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-gray-700 hover:text-indigo-600 transition">
-                            {{ Auth::user()->name }}
-                        </a>
+                        <!-- Mobile Menu Toggle -->
+                        <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-indigo-600 transition p-2">
+                            <i class="fa-solid fa-bars text-lg"></i>
+                        </button>
 
-                        <form method="POST" action="{{ route('logout') }}" class="inline">
-                            @csrf
-                            <button type="submit" class="text-red-500 hover:text-red-700 text-sm font-bold ml-2 transition" title="Keluar">
-                                <i class="fa-solid fa-right-from-bracket text-lg"></i>
-                            </button>
-                        </form>
+                        <!-- Desktop User Menu -->
+                        <div class="hidden md:flex items-center gap-2">
+                            <a href="{{ url('/dashboard') }}" class="text-xs md:text-sm font-bold text-gray-700 hover:text-indigo-600 transition truncate max-w-[120px]" title="{{ Auth::user()->name }}">
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                                @csrf
+                                <button type="submit" class="text-red-500 hover:text-red-700 text-xs md:text-sm font-bold transition" title="Keluar">
+                                    <i class="fa-solid fa-right-from-bracket text-lg"></i>
+                                </button>
+                            </form>
+                        </div>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm font-bold text-gray-500 hover:text-indigo-600 transition">Masuk</a>
-                        <a href="{{ route('register') }}" class="px-5 py-2 bg-indigo-600 text-white rounded-full text-xs font-bold uppercase tracking-wider hover:bg-indigo-700 transition shadow-md hover:shadow-lg">
+                        <a href="{{ route('login') }}" class="text-xs sm:text-sm font-bold text-gray-500 hover:text-indigo-600 transition">Masuk</a>
+                        <a href="{{ route('register') }}" class="px-3 sm:px-5 py-2 bg-indigo-600 text-white rounded-full text-xs font-bold uppercase tracking-wider hover:bg-indigo-700 transition shadow-md hover:shadow-lg flex-shrink-0">
                             Daftar
                         </a>
                     @endauth
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 py-3 bg-white absolute left-0 right-0 top-16 shadow-lg z-40">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-3">
+                    <a href="{{ route('home') }}" class="block text-sm font-medium text-gray-600 hover:text-indigo-600 transition py-2 {{ request()->routeIs('home') ? 'text-indigo-600' : '' }}">
+                        <i class="fa-solid fa-home mr-2"></i> Beranda
+                    </a>
+                    <a href="{{ route('about') }}" class="block text-sm font-medium text-gray-600 hover:text-indigo-600 transition py-2 {{ request()->routeIs('about') ? 'text-indigo-600' : '' }}">
+                        <i class="fa-solid fa-circle-info mr-2"></i> Tentang Kami
+                    </a>
+                    
+                    @auth
+                        <a href="{{ route('my-orders.index') }}" class="block text-sm font-medium text-gray-600 hover:text-indigo-600 transition py-2 sm:hidden">
+                            <i class="fa-solid fa-box mr-2"></i> Pesanan Saya
+                        </a>
+                        
+                        <div class="border-t border-gray-100 pt-3 mt-3">
+                            <a href="{{ url('/dashboard') }}" class="block text-sm font-bold text-gray-700 hover:text-indigo-600 transition py-2">
+                                <i class="fa-solid fa-user mr-2"></i> {{ Auth::user()->name }}
+                            </a>
+
+                            <form method="POST" action="{{ route('logout') }}" class="block">
+                                @csrf
+                                <button type="submit" class="w-full text-left text-red-500 hover:text-red-700 text-sm font-bold transition py-2">
+                                    <i class="fa-solid fa-right-from-bracket mr-2"></i> Keluar
+                                </button>
+                            </form>
+                        </div>
+                    @endauth
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
                 </div>
             </div>
         </div>
@@ -156,6 +217,97 @@
                     <i class="fa-brands fa-whatsapp text-2xl"></i>
                     Chat WhatsApp Admin
                 </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-16 md:py-24 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-2xl md:rounded-[2rem] shadow-2xl overflow-hidden border border-indigo-100/50 flex flex-col md:flex-row relative z-10">
+                
+                <!-- Let's Add a Left Info Section -->
+                <div class="w-full md:w-5/12 bg-indigo-600 p-8 sm:p-10 lg:p-12 text-white flex flex-col justify-between relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 sm:mb-4 text-white">Mari Berbincang!</h2>
+                        <p class="text-indigo-100 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8">Punya pertanyaan, saran, atau peluang kerja sama? Jangan ragu tinggalkan pesan. Tim admin kami akan segera merespons.</p>
+                        
+                        <div class="space-y-4 sm:space-y-6 mt-6 sm:mt-8 flex flex-row md:flex-col gap-4 md:gap-0 flex-wrap">
+                            <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-500/50 rounded-full flex items-center justify-center backdrop-blur-sm shrink-0">
+                                    <i class="fa-solid fa-envelope text-lg sm:text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs sm:text-sm text-indigo-200">Email Utama</p>
+                                    <p class="font-medium tracking-wide text-sm sm:text-base">admin@tokobuku.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-500/50 rounded-full flex items-center justify-center backdrop-blur-sm shrink-0">
+                                    <i class="fa-solid fa-location-dot text-lg sm:text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs sm:text-sm text-indigo-200">Kunjungi Toko</p>
+                                    <p class="font-medium tracking-wide text-sm sm:text-base line-clamp-1">Jl. Literasi No. 1, Jakarta</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative background circles -->
+                    <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
+                    <div class="absolute -top-24 -left-24 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
+                </div>
+
+                <!-- Right Form Section -->
+                <div class="w-full md:w-7/12 p-6 sm:p-8 lg:p-12">
+                    <div class="mb-6 sm:mb-8">
+                        <h3 class="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">Kirim Pesan ke Kami</h3>
+                        <p class="text-xs sm:text-sm text-gray-500 mt-2">Isi form di bawah ini dan pesanmu akan langsung masuk ke panel admin.</p>
+                    </div>
+
+                    @if(session('success'))
+                        <div class="mb-6 rounded-xl border border-green-200 bg-green-50/50 px-5 py-4 text-green-700 flex items-center gap-3 backdrop-blur-sm shadow-sm scale-in text-sm font-medium">
+                            <span>🎉 {{ session('success') }}</span>
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="mb-6 rounded-xl border border-red-200 bg-red-50/50 px-5 py-4 text-red-700 flex items-start gap-3 backdrop-blur-sm shadow-sm text-sm">
+                            <div>
+                                <strong class="font-bold block mb-1">Ada yang terlewat:</strong>
+                                <ul class="list-disc list-inside space-y-1">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('about.message.store') }}" method="POST" class="space-y-6">
+                        @csrf
+                        <div class="group">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-indigo-600" for="name">Nama Lengkap</label>
+                            <input id="name" type="text" name="name" value="{{ old('name') }}" class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3.5 text-gray-800 placeholder-gray-400 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300" placeholder="Masukkan nama lengkapmu">
+                        </div>
+
+                        <div class="group">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-indigo-600" for="email">Alamat Email</label>
+                            <input id="email" type="email" name="email" value="{{ old('email') }}" class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3.5 text-gray-800 placeholder-gray-400 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300" placeholder="nama@email.com">
+                        </div>
+
+                        <div class="group">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-indigo-600" for="message">Pesan / Topik</label>
+                            <textarea id="message" name="message" rows="4" class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3.5 text-gray-800 placeholder-gray-400 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300 resize-none" placeholder="Tuliskan pertanyaan, saran, atau kerja samamu di sini...">{{ old('message') }}</textarea>
+                        </div>
+
+                        <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 font-bold text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                            Kirim Pesan Sekarang
+                            <i class="fa-solid fa-paper-plane text-sm ml-1"></i>
+                        </button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

@@ -9,7 +9,7 @@ class OrderItem extends Model
 {
     use HasFactory;
     
-    // Matikan timestamp karena tabel ini tidak punya kolom created_at/updated_at
+    
     public $timestamps = false; 
 
     protected $fillable = [

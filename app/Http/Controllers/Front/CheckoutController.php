@@ -9,16 +9,25 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage; // Tambahan untuk upload file
 
 class CheckoutController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $carts = Cart::with('book')->where('user_id', Auth::id())->get();
+        $selectedCartIds = $request->input('selected_carts', []);
+
+        if (!$request->has('selected_carts') || empty($selectedCartIds)) {
+            return redirect()->route('cart.index')->with('error', 'Pilih minimal satu item untuk checkout!');
+        }
+
+        $cartsQuery = Cart::with('book')->where('user_id', Auth::id());
+
+        $cartsQuery->whereIn('id', $selectedCartIds);
+
+        $carts = $cartsQuery->get();
 
         if ($carts->isEmpty()) {
-            return redirect()->route('cart.index')->with('error', 'Keranjangmu kosong!');
+            return redirect()->route('cart.index')->with('error', 'Pilih minimal satu item untuk checkout!');
         }
 
         return view('front.checkout', compact('carts'));
@@ -26,43 +35,52 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        // 1. Validasi Input (Tambahan validasi file gambar)
+        
         $request->validate([
+            'selected_carts' => 'required|array|min:1',
+            'selected_carts.*' => 'integer',
             'shipping_address' => 'required|string|max:500',
             'payment_method' => 'required|in:transfer,cod',
-            'payment_proof' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Max 2MB
+            'payment_proof' => 'required_if:payment_method,transfer|nullable|image|mimes:jpeg,png,jpg|max:2048', 
         ]);
 
         DB::transaction(function () use ($request) {
             
             $user = Auth::user();
-            $carts = Cart::with('book')->where('user_id', $user->id)->get();
+            $carts = Cart::with('book')
+                ->where('user_id', $user->id)
+                ->whereIn('id', $request->selected_carts)
+                ->get();
 
-            // Hitung Total
+            if ($carts->isEmpty()) {
+                abort(422, 'Item checkout tidak ditemukan.');
+            }
+
+            
             $totalAmount = 0;
             foreach ($carts as $cart) {
                 $totalAmount += $cart->book->price * $cart->quantity;
             }
 
-            // 2. Upload Bukti Bayar (Jika ada)
+            
             $proofPath = null;
             if ($request->hasFile('payment_proof')) {
                 $proofPath = $request->file('payment_proof')->store('payment_proofs', 'public');
             }
 
-            // 3. Buat Order Header
+            
             $order = Order::create([
                 'user_id' => $user->id,
                 'order_number' => 'TRX-' . time(),
                 'total_amount' => $totalAmount,
                 'shipping_address' => $request->shipping_address,
                 'payment_method' => $request->payment_method,
-                'payment_proof' => $proofPath ? 'storage/' . $proofPath : null, // Simpan path gambar
+                'payment_proof' => $proofPath ? 'storage/' . $proofPath : null, 
                 'status' => 'pending',
                 'notes' => $request->notes
             ]);
 
-            // 4. Pindahkan item & KURANGI STOK
+            
             foreach ($carts as $cart) {
                 OrderItem::create([
                     'order_id' => $order->id,
@@ -72,16 +90,18 @@ class CheckoutController extends Controller
                     'subtotal' => $cart->book->price * $cart->quantity
                 ]);
 
-                // --- LOGIKA PENGURANGAN STOK ---
-                // Kita panggil buku aslinya, lalu kurangi stoknya
+                
+                
                 $cart->book->decrement('stock', $cart->quantity);
             }
 
-            // 5. Kosongkan Keranjang
-            Cart::where('user_id', $user->id)->delete();
+            
+            Cart::where('user_id', $user->id)
+                ->whereIn('id', $request->selected_carts)
+                ->delete();
         });
 
-        // Redirect ke halaman "Pesanan Saya" (Nanti kita buat)
+        
         return redirect()->route('my-orders.index')->with('success', 'Pesanan berhasil dibuat! Silakan pantau statusnya di sini.');
     }
 }

@@ -22,11 +22,11 @@ class Book extends Model
         'cover_image'
     ];
 
-    // --- BAGIAN INI YANG KEMUNGKINAN HILANG ATAU SALAH NAMA ---
+    
     public function category()
     {
-        // Ini memberitahu Laravel bahwa 'category_id' milik tabel Category
+        
         return $this->belongsTo(Category::class);
     }
-    // -----------------------------------------------------------
+    
 }
