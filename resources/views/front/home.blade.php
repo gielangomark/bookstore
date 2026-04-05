@@ -15,7 +15,7 @@
                 
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="font-bold text-xl sm:text-2xl text-indigo-600 flex items-center gap-2 hover:opacity-80 transition flex-shrink-0">
-                    <span>📚</span> <span class="hidden xs:inline">TokoBuku</span>
+                    <span>📚</span> <span class="hidden sm:inline uppercase tracking-wide">Giebook</span>
                 </a>
                 
                 <!-- Desktop Navigation -->
@@ -218,10 +218,10 @@
 
     <footer class="bg-gray-900 text-white py-8 sm:py-12 mt-8 sm:mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">📚 TokoBuku</h2>
+            <h2 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">📚 GIEBOOK</h2>
             <p class="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">Platform pembelian buku terpercaya dengan koleksi terlengkap.</p>
             <div class="border-t border-gray-800 pt-6 sm:pt-8 text-xs sm:text-sm text-gray-500">
-                &copy; {{ date('Y') }} TokoBuku. All rights reserved.
+                &copy; {{ date('Y') }} giebook. All rights reserved.
             </div>
         </div>
     </footer>

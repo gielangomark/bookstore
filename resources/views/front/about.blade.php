@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tentang Kami - TokoBuku</title>
+    <title>Tentang Kami - giebook</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -15,7 +15,7 @@
                 
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="font-bold text-xl sm:text-2xl text-indigo-600 flex items-center gap-2 hover:opacity-80 transition flex-shrink-0">
-                    <span>📚</span> <span class="hidden xs:inline">TokoBuku</span>
+                    <span>📚</span> <span class="hidden sm:inline uppercase tracking-wide">Giebook</span>
                 </a>
                 
                 <!-- Desktop Navigation -->
@@ -152,7 +152,7 @@
                 <div class="w-full md:w-1/2">
                     <h2 class="text-3xl font-bold text-gray-900 mb-6">Cerita Kami</h2>
                     <p class="text-gray-600 mb-4 leading-relaxed">
-                        Berdiri sejak tahun 2024, <strong>TokoBuku</strong> dimulai dari sebuah kamar kecil dengan tumpukan buku bekas. Kecintaan kami terhadap literatur mendorong kami untuk membangun platform yang memudahkan siapa saja mengakses buku berkualitas dengan harga terjangkau.
+                        Berdiri sejak tahun 2024, <strong>giebook</strong> dimulai dari sebuah kamar kecil dengan tumpukan buku bekas. Kecintaan kami terhadap literatur mendorong kami untuk membangun platform yang memudahkan siapa saja mengakses buku berkualitas dengan harga terjangkau.
                     </p>
                     <p class="text-gray-600 mb-6 leading-relaxed">
                         Kini, kami telah melayani ribuan pembaca di seluruh Indonesia. Kami hanya menjual buku **100% Original** langsung dari penerbit terpercaya.
@@ -160,7 +160,7 @@
                     
                     <div class="flex items-center gap-4">
                         <div class="h-px w-12 bg-indigo-600"></div>
-                        <span class="font-handwriting text-xl italic text-indigo-800">CEO TokoBuku</span>
+                        <span class="font-handwriting text-xl italic text-indigo-800">CEO giebook</span>
                     </div>
                 </div>
             </div>
@@ -211,7 +211,7 @@
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">Butuh Bantuan atau Rekomendasi?</h2>
                 <p class="text-green-100 mb-8 text-lg">Admin kami siap menjawab pertanyaan Anda seputar stok, pengiriman, atau curhat buku.</p>
                 
-                <a href="https://wa.me/6287784728925?text=Halo%20Admin%20TokoBuku,%20saya%20mau%20tanya..." 
+                <a href="https://wa.me/6287784728925?text=Halo%20Admin%20GIEBOOK,%20saya%20mau%20tanya..." 
                    target="_blank"
                    class="inline-flex items-center gap-3 bg-white text-green-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-green-50 hover:scale-105 transition-all shadow-lg">
                     <i class="fa-brands fa-whatsapp text-2xl"></i>
@@ -314,15 +314,15 @@
 
     <footer class="bg-gray-900 text-white py-12">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold mb-4">📚 TokoBuku</h2>
+            <h2 class="text-2xl font-bold mb-4 uppercase tracking-wide">📚 Giebook</h2>
             <p class="text-gray-400 mb-8">Membaca adalah jendela dunia.</p>
             <div class="border-t border-gray-800 pt-8 text-sm text-gray-500">
-                &copy; {{ date('Y') }} TokoBuku. All rights reserved.
+                &copy; {{ date('Y') }} giebook. All rights reserved.
             </div>
         </div>
     </footer>
 
-    <a href="https://wa.me/6287784728925?text=Halo%20Admin%20TokoBuku,%20saya%20mau%20tanya..." target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 hover:-translate-y-1 transition-all z-50">
+    <a href="https://wa.me/6287784728925?text=Halo%20Admin%20giebook,%20saya%20mau%20tanya..." target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 hover:-translate-y-1 transition-all z-50">
         <i class="fa-brands fa-whatsapp text-3xl"></i>
     </a>
 

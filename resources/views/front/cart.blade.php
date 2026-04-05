@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Keranjang Belanja - TokoBuku</title>
+    <title>Keranjang Belanja - GIEBOOK</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -15,7 +15,7 @@
                 
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="font-bold text-xl sm:text-2xl text-indigo-600 flex items-center gap-2 hover:opacity-80 transition flex-shrink-0">
-                    <span>📚</span> <span class="hidden xs:inline">TokoBuku</span>
+                    <span>📚</span> <span class="hidden sm:inline uppercase tracking-wide">Giebook</span>
                 </a>
                 
                 <!-- Desktop Navigation -->

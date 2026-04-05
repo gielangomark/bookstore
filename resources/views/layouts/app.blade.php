@@ -38,7 +38,7 @@
                     <button onclick="toggleMobileSidebar()" class="p-2 rounded hover:bg-gray-800 transition" title="Toggle Sidebar">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
-                    <span class="font-bold text-lg">📚 AdminPanel</span>
+                    <span class="font-bold text-lg uppercase tracking-wide">📚 Giebook</span>
                     <a href="{{ route('home') }}" class="p-2 rounded hover:bg-gray-800 transition" title="Kembali ke Website">
                         <i class="fa-solid fa-home text-xl"></i>
                     </a>

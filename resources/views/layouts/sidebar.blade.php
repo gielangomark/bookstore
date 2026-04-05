@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between h-16 bg-gradient-to-r from-gray-900 to-gray-800 shadow-md border-b border-gray-700 px-4">
         <a href="{{ route('admin.dashboard') }}" class="text-2xl font-bold text-white flex items-center gap-2 hover:opacity-80 transition">
             <span>📚</span> 
-            <span class="hidden sm:inline">AdminPanel</span>
+            <span class="hidden sm:inline uppercase tracking-wide">Giebook Admin</span>
         </a>
         <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-gray-400 hover:text-white transition" title="Close">
             <i class="fa-solid fa-times text-xl"></i>
