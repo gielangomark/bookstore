@@ -104,13 +104,13 @@
     </nav>
 
     <script>
-        // Mobile menu toggle
+        // Toggle tampil-sembunyiin mobile menu saat tombol hamburger diklik
         document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
 
-        // Close menu when clicking outside
+        // Tutup menu kalo user klik diluar area menu
         document.addEventListener('click', function(e) {
             const menu = document.getElementById('mobile-menu');
             const btn = document.getElementById('mobile-menu-btn');
@@ -125,22 +125,29 @@
     </nav>
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+        {{-- Judul halaman --}}
         <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">Riwayat Pesanan Saya</h1>
 
+        {{-- Notif sukses --}}
         @if(session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 text-sm md:text-base">
                 {{ session('success') }}
             </div>
         @endif
 
+        {{-- List pesanan --}}
         <div class="space-y-4 sm:space-y-6">
             @forelse($orders as $order)
+                {{-- Card pesanan --}}
                 <div class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-100">
+                    {{-- Header: nomor pesanan dan status --}}
                     <div class="bg-gray-50 px-4 sm:px-6 py-3 sm:py-4 border-b flex justify-between items-start sm:items-center flex-col sm:flex-row gap-3">
+                        {{-- Nomor pesanan dan tanggal --}}
                         <div>
                             <p class="font-bold text-gray-700 text-sm sm:text-base">#{{ $order->order_number }}</p>
                             <p class="text-xs text-gray-500">{{ $order->created_at->format('d M Y') }}</p>
                         </div>
+                        {{-- Badge status pesanan --}}
                         <div>
                             @if($order->status == 'pending')
                                 <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 sm:px-3 py-1 rounded-full inline-block">Menunggu Konfirmasi</span>
@@ -156,24 +163,34 @@
                         </div>
                     </div>
 
+                    {{-- Isi: list buku yang dipesan --}}
                     <div class="p-4 sm:p-6">
                         @foreach($order->items as $item)
+                            {{-- Item buku --}}
                             <div class="flex items-start gap-2 sm:gap-4 mb-3 sm:mb-4 last:mb-0 pb-3 sm:pb-4 last:pb-0 border-b last:border-b-0">
+                                {{-- Cover buku thumbnails --}}
                                 <img src="{{ str_starts_with($item->book->cover_image, 'http') ? $item->book->cover_image : asset($item->book->cover_image) }}" class="w-12 h-16 sm:w-16 sm:h-20 object-cover rounded shadow-sm flex-shrink-0">
+                                {{-- Info buku --}}
                                 <div class="flex-grow min-w-0">
+                                    {{-- Judul buku --}}
                                     <h4 class="font-bold text-gray-800 text-sm sm:text-base line-clamp-2">{{ $item->book->title }}</h4>
+                                    {{-- Qty dan harga satuan --}}
                                     <p class="text-xs sm:text-sm text-gray-600 mt-1">{{ $item->quantity }} barang x Rp {{ number_format($item->price, 0, ',', '.') }}</p>
                                 </div>
                             </div>
                         @endforeach
                     </div>
 
+                    {{-- Footer: metode pembayaran dan total --}}
                     <div class="bg-gray-50 px-4 sm:px-6 py-3 sm:py-4 border-t flex justify-between items-start sm:items-center flex-col sm:flex-row gap-2">
+                        {{-- Metode pembayaran --}}
                         <p class="text-xs sm:text-sm text-gray-500">Metode: {{ strtoupper($order->payment_method) }}</p>
+                        {{-- Total harga --}}
                         <p class="text-lg sm:text-xl font-bold text-indigo-600">Total: Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
                     </div>
                 </div>
             @empty
+                {{-- Empty state: kalo belum ada pesanan --}}
                 <div class="text-center py-12 bg-white rounded-lg border border-dashed">
                     <p class="text-gray-500 text-sm md:text-base">Belum ada riwayat pesanan.</p>
                 </div>

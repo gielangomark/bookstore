@@ -15,7 +15,7 @@
                 
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="font-bold text-xl sm:text-2xl text-indigo-600 flex items-center gap-2 hover:opacity-80 transition flex-shrink-0">
-                    <span>📚</span> <span class="hidden sm:inline uppercase tracking-wide">Giebook</span>
+                    <span>📚</span> <span class="hidden sm:inline">giebook</span>
                 </a>
                 
                 <!-- Desktop Navigation -->
@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            <!-- Mobile Menu -->
+            <!-- tAMPIlan HP -->
             <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 py-3 bg-white absolute left-0 right-0 top-16 shadow-lg z-40">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-3">
                     <a href="{{ route('home') }}" class="block text-sm font-medium text-gray-600 hover:text-indigo-600 transition py-2 {{ request()->routeIs('home') ? 'text-indigo-600' : '' }}">
@@ -104,13 +104,13 @@
     </nav>
 
     <script>
-        // Mobile menu toggle
+        // Toggle tampil-sembunyiin mobile menu saat tombol hamburger diklik
         document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
 
-        // Close menu when clicking outside
+        // Tutup menu kalo user klik diluar area menu
         document.addEventListener('click', function(e) {
             const menu = document.getElementById('mobile-menu');
             const btn = document.getElementById('mobile-menu-btn');
@@ -127,35 +127,44 @@
     <div class="py-6 sm:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
+            {{-- Tombol kembali ke katalog --}}
             <a href="{{ route('home') }}" class="inline-flex items-center text-indigo-600 hover:text-indigo-800 mb-4 sm:mb-6 font-medium text-sm sm:text-base">
                 &larr; Kembali ke Katalog
             </a>
 
+            {{-- Notif sukses --}}
             @if(session('success'))
                 <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative text-sm md:text-base">
                     {{ session('success') }}
                 </div>
             @endif
+            {{-- Notif error --}}
             @if(session('error'))
                 <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm md:text-base">
                     {{ session('error') }}
                 </div>
             @endif
 
+            {{-- Container utama: cover sebelah kiri, info sebelah kanan --}}
             <div class="bg-white overflow-hidden shadow-xl rounded-lg md:rounded-2xl flex flex-col md:flex-row">
                 
+                {{-- Sebelah kiri: Cover buku --}}
                 <div class="w-full md:w-1/3 bg-gray-100 flex items-center justify-center p-4 sm:p-8">
                     <img src="{{ str_starts_with($book->cover_image, 'http') ? $book->cover_image : asset($book->cover_image) }}" 
                          alt="{{ $book->title }}" 
                          class="w-32 sm:w-48 md:w-64 shadow-2xl rounded-lg transform hover:scale-105 transition-transform duration-500 object-cover">
                 </div>
 
+                {{-- Sebelah kanan: Info buku --}}
                 <div class="w-full md:w-2/3 p-4 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-between">
                     <div>
+                        {{-- Badge kategori dan status stok --}}
                         <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                            {{-- Kategori --}}
                             <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
                                 {{ $book->category->name }}
                             </span>
+                            {{-- Status stok --}}
                             @if($book->stock > 0)
                                 <span class="text-green-600 text-xs sm:text-sm font-semibold flex items-center">
                                     ✅ Stok Tersedia ({{ $book->stock }})
@@ -167,16 +176,20 @@
                             @endif
                         </div>
 
+                        {{-- Judul buku --}}
                         <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-2 leading-tight">
                             {{ $book->title }}
                         </h1>
+                        {{-- Penulis --}}
                         <p class="text-base sm:text-lg text-gray-500 mb-6 font-medium">Penulis: {{ $book->author }}</p>
 
+                        {{-- Sinopsis/deskripsi --}}
                         <div class="prose max-w-none text-gray-600 mb-8 leading-relaxed text-sm sm:text-base">
                             <h3 class="font-bold text-gray-800 mb-2">Sinopsis</h3>
                             <p>{{ $book->description }}</p>
                         </div>
 
+                        {{-- Info tambahan: penerbit, tahun, ISBN --}}
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-8 text-xs sm:text-sm text-gray-500 border-t border-b py-4">
                             <div>
                                 <span class="block font-bold text-gray-700 mb-1">Penerbit</span>
@@ -193,7 +206,9 @@
                         </div>
                     </div>
 
+                    {{-- Harga dan tombol add to cart --}}
                     <div class="flex items-center justify-between mt-4 pt-6 border-t border-gray-100 flex-col sm:flex-row gap-4">
+                        {{-- Harga --}}
                         <div>
                             <p class="text-xs sm:text-sm text-gray-400">Harga Spesial</p>
                             <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-indigo-600">
@@ -201,9 +216,11 @@
                             </p>
                         </div>
                         
+                        {{-- Form add to cart --}}
                         <form action="{{ route('cart.store', $book->id) }}" method="POST" class="w-full sm:w-auto">
                             @csrf
-                            <button type="submit" class="w-full bg-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg md:rounded-xl font-bold text-base sm:text-lg shadow-lg hover:bg-indigo-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                            {{-- Tombol masuk keranjang --}}
+                            <button type="submit" class="w-full sm:w-auto px-6 sm:px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition transform hover:scale-105 flex items-center justify-center gap-2">
                                 🛒 Masukkan Keranjang
                             </button>
                         </form>

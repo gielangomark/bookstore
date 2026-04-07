@@ -104,13 +104,13 @@
     </nav>
 
     <script>
-        // Mobile menu toggle
+        // Toggle tampil-sembunyikan mobile menu saat tombol hamburger diklik
         document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
 
-        // Close menu when clicking outside
+        // Tutup menu kalo user klik diluar area menu
         document.addEventListener('click', function(e) {
             const menu = document.getElementById('mobile-menu');
             const btn = document.getElementById('mobile-menu-btn');
@@ -122,8 +122,10 @@
 
     <div class="py-6 sm:py-12">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            {{-- Judul halaman checkout --}}
             <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 text-center">Checkout Pesanan</h1>
 
+            {{-- Tampilkan error kalo ada validasi gagal --}}
             @if ($errors->any())
                 <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm md:text-base">
                     <strong class="font-bold block mb-2">Ada masalah!</strong>
@@ -135,18 +137,27 @@
                 </div>
             @endif
 
+            {{-- Container checkout: sebelah kiri ringkasan, sebelah kanan form --}}
             <div class="bg-white shadow-xl rounded-xl md:rounded-2xl overflow-hidden flex flex-col md:flex-row">
                 
+                {{-- Sebelah kiri: Ringkasan item yang akan di-checkout --}}
                 <div class="w-full md:w-1/2 bg-gray-50 p-4 sm:p-6 md:p-8 border-b md:border-r md:border-b-0">
                     <h3 class="font-bold text-lg sm:text-xl md:text-2xl mb-4 text-gray-700">Ringkasan Item</h3>
+                    {{-- List item dengan scrollable area --}}
                     <div class="space-y-3 sm:space-y-4 max-h-64 sm:max-h-96 overflow-y-auto pr-2">
                         @php $grandTotal = 0; @endphp
+                        {{-- Looping setiap item di cart --}}
                         @foreach($carts as $cart)
                             @php $grandTotal += $cart->book->price * $cart->quantity; @endphp
+                            {{-- Item detail --}}
                             <div class="flex gap-3 sm:gap-4 items-start pb-3 sm:pb-4 border-b last:border-b-0">
+                                {{-- Cover buku --}}
                                 <img src="{{ str_starts_with($cart->book->cover_image, 'http') ? $cart->book->cover_image : asset($cart->book->cover_image) }}" class="w-12 h-16 sm:w-16 sm:h-20 object-cover rounded shadow flex-shrink-0">
+                                {{-- Info item: judul, qty, harga --}}
                                 <div class="flex-grow min-w-0">
+                                    {{-- Judul buku --}}
                                     <p class="font-bold text-sm sm:text-base line-clamp-2">{{ $cart->book->title }}</p>
+                                    {{-- Qty x harga per satuan --}}
                                     <p class="text-xs sm:text-sm text-gray-500 mt-1">{{ $cart->quantity }} x Rp {{ number_format($cart->book->price, 0, ',', '.') }}</p>
                                     <p class="font-bold text-indigo-600 text-sm sm:text-base mt-1">Rp {{ number_format($cart->book->price * $cart->quantity, 0, ',', '.') }}</p>
                                 </div>
@@ -154,6 +165,7 @@
                         @endforeach
                     </div>
                     
+                    {{-- Total tagihan --}}
                     <div class="mt-6 pt-6 border-t border-gray-200">
                         <div class="flex justify-between items-start md:items-center flex-col md:flex-row gap-2">
                             <span class="font-bold text-gray-600 text-sm sm:text-base">Total Tagihan</span>
@@ -162,23 +174,28 @@
                     </div>
                 </div>
 
+                {{-- Sebelah kanan: Form checkout (alamat, metode bayar, dll) --}}
                 <div class="w-full md:w-1/2 p-4 sm:p-6 md:p-8">
                     <form action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        {{-- Hidden input buat kirim ID item yang di-checkout --}}
                         @foreach($carts as $cart)
                             <input type="hidden" name="selected_carts[]" value="{{ $cart->id }}">
                         @endforeach
                         
+                        {{-- Field nama penerima (read-only) --}}
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">Nama Penerima</label>
                             <input type="text" value="{{ Auth::user()->name }}" class="w-full bg-gray-100 border border-gray-300 rounded py-2 px-3 text-gray-500 text-sm sm:text-base" readonly>
                         </div>
 
+                        {{-- Field alamat pengiriman --}}
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">Alamat Lengkap Pengiriman</label>
                             <textarea name="shipping_address" rows="3" class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-indigo-500 text-sm sm:text-base" placeholder="Jalan, Nomor Rumah, Kecamatan, Kota..." required>{{ Auth::user()->address }}</textarea>
                         </div>
 
+                        {{-- Field metode pembayaran --}}
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">Metode Pembayaran</label>
                             <select name="payment_method" id="payment_method" class="w-full border border-gray-300 rounded py-2 px-3 text-sm sm:text-base" onchange="togglePaymentInfo()">
@@ -187,14 +204,17 @@
                             </select>
                         </div>
 
+                        {{-- Info transfer bank dan upload bukti (tersembunyi awalnya) --}}
                         <div id="transfer_info" class="hidden mb-6 bg-blue-50 border border-blue-200 rounded p-3 sm:p-4 transition-all duration-300">
                             <h4 class="font-bold text-blue-800 mb-2 text-sm sm:text-base">Info Transfer Bank</h4>
                             <p class="text-xs sm:text-sm text-gray-700">Silakan transfer ke salah satu rekening berikut:</p>
+                            {{-- Daftar rekening transfer --}}
                             <ul class="list-disc list-inside text-xs sm:text-sm text-gray-800 mt-2 font-mono bg-white p-2 rounded border space-y-1">
                                 <li>BCA: <strong>645-038-1886</strong> (a.n GIELANG OMAR KHADAVI)</li>
                                 <li>Mandiri: <strong>600-135-264-74</strong> (a.n GIELANG OMAR KHADAVI)</li>
                             </ul>
 
+                            {{-- Input upload bukti pembayaran --}}
                             <div class="mt-4">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">Upload Bukti Pembayaran</label>
                                 <input id="payment_proof" type="file" name="payment_proof" class="w-full text-xs sm:text-sm text-gray-500 file:mr-2 sm:file:mr-4 file:py-2 file:px-3 sm:file:px-4 file:rounded-full file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
@@ -218,21 +238,25 @@
     </div>
 
     <script>
+        // Fungsi buat nampilin/sembunyiin form upload bukti pembayaran sesuai metode pembayaran
         function togglePaymentInfo() {
             const method = document.getElementById('payment_method').value;
             const infoDiv = document.getElementById('transfer_info');
             const paymentProofInput = document.getElementById('payment_proof');
             
+            // Kalo user pilih transfer, tunjukin form upload bukti dan buat jadi required
             if (method === 'transfer') {
                 infoDiv.classList.remove('hidden');
                 paymentProofInput.required = true;
             } else {
+                // Kalo pilih COD, sembunyiin form upload dan gajadi required
                 infoDiv.classList.add('hidden');
                 paymentProofInput.required = false;
                 paymentProofInput.value = '';
             }
         }
 
+        // Jalanin fungsi pas halaman pertama kali load
         togglePaymentInfo();
     </script>
 </body>

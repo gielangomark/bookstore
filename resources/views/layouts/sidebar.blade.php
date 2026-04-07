@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between h-16 bg-gradient-to-r from-gray-900 to-gray-800 shadow-md border-b border-gray-700 px-4">
         <a href="{{ route('admin.dashboard') }}" class="text-2xl font-bold text-white flex items-center gap-2 hover:opacity-80 transition">
             <span>📚</span> 
-            <span class="hidden sm:inline uppercase tracking-wide">Giebook Admin</span>
+            <span class="hidden sm:inline uppercase tracking-wide text-lg">Giebook Admin</span>
         </a>
         <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-gray-400 hover:text-white transition" title="Close">
             <i class="fa-solid fa-times text-xl"></i>
@@ -25,6 +25,13 @@
                {{ request()->routeIs('admin.books.*') ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-lg' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
                 <i class="fa-solid fa-book mr-3 text-lg flex-shrink-0"></i>
                 <span>Kelola Buku</span>
+            </a>
+
+            <a href="{{ route('admin.categories.index') }}" 
+               class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200 
+               {{ request()->routeIs('admin.categories.*') ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-lg' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                <i class="fa-solid fa-folder mr-3 text-lg flex-shrink-0"></i>
+                <span>Kelola Kategori</span>
             </a>
 
             <a href="{{ route('admin.orders.index') }}" 

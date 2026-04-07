@@ -104,13 +104,13 @@
     </nav>
 
     <script>
-        // Mobile menu toggle
+        // Toggle tampil-sembunyiin mobile menu saat tombol hamburger diklik
         document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
 
-        // Close menu when clicking outside
+        // Tutup menu kalo user klik diluar area menu
         document.addEventListener('click', function(e) {
             const menu = document.getElementById('mobile-menu');
             const btn = document.getElementById('mobile-menu-btn');
@@ -124,23 +124,28 @@
         </div>
     </nav>
 
+    {{-- Banner hero section --}}
     <div class="relative bg-indigo-900 py-24 overflow-hidden">
         <div class="absolute inset-0 opacity-20">
             <img src="https://images.unsplash.com/photo-1507842217153-eeb5fe6149kd?q=80&w=1920&auto=format&fit=crop" alt="Library Background" class="w-full h-full object-cover">
         </div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            {{-- Judul hero --}}
             <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-4">
                 Lebih Dari Sekadar <br> <span class="text-indigo-300">Toko Buku</span>
             </h1>
+            {{-- Subtitle hero --}}
             <p class="text-lg text-indigo-100 max-w-2xl mx-auto">
                 Kami percaya bahwa satu buku dapat mengubah hidup seseorang. Misi kami adalah menghubungkan Anda dengan cerita dan ilmu pengetahuan terbaik dari seluruh dunia.
             </p>
         </div>
     </div>
 
+    {{-- Section: Cerita Kami --}}
     <div class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center gap-12">
+                {{-- Gambar cerita --}}
                 <div class="w-full md:w-1/2">
                     <div class="relative">
                         <div class="absolute -top-4 -left-4 w-full h-full bg-indigo-100 rounded-2xl z-0"></div>
@@ -149,15 +154,19 @@
                              class="relative z-10 rounded-2xl shadow-xl w-full h-80 object-cover hover:scale-[1.02] transition-transform duration-500">
                     </div>
                 </div>
+                {{-- Teks cerita --}}
                 <div class="w-full md:w-1/2">
                     <h2 class="text-3xl font-bold text-gray-900 mb-6">Cerita Kami</h2>
+                    {{-- Paragraf 1 --}}
                     <p class="text-gray-600 mb-4 leading-relaxed">
                         Berdiri sejak tahun 2024, <strong>giebook</strong> dimulai dari sebuah kamar kecil dengan tumpukan buku bekas. Kecintaan kami terhadap literatur mendorong kami untuk membangun platform yang memudahkan siapa saja mengakses buku berkualitas dengan harga terjangkau.
                     </p>
+                    {{-- Paragraf 2 --}}
                     <p class="text-gray-600 mb-6 leading-relaxed">
                         Kini, kami telah melayani ribuan pembaca di seluruh Indonesia. Kami hanya menjual buku **100% Original** langsung dari penerbit terpercaya.
                     </p>
                     
+                    {{-- Tanda tangan symbolic --}}
                     <div class="flex items-center gap-4">
                         <div class="h-px w-12 bg-indigo-600"></div>
                         <span class="font-handwriting text-xl italic text-indigo-800">CEO giebook</span>
@@ -167,14 +176,18 @@
         </div>
     </div>
 
+    {{-- Section: Alasan Belanja di Sini --}}
     <div class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {{-- Title section --}}
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-gray-900">Kenapa Belanja di Sini?</h2>
                 <p class="text-gray-500 mt-2">Komitmen kami untuk kepuasan membaca Anda.</p>
             </div>
 
+            {{-- 3 Keuntungan cards --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {{-- Card 1: 100% Original --}}
                 <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition text-center group">
                     <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-check-circle text-2xl"></i>
@@ -183,6 +196,7 @@
                     <p class="text-gray-500 text-sm">Garansi uang kembali jika buku yang Anda terima bajakan. Kami anti buku bajakan.</p>
                 </div>
 
+                {{-- Card 2: Pengiriman Cepat --}}
                 <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition text-center group">
                     <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-truck-fast text-2xl"></i>
@@ -191,6 +205,7 @@
                     <p class="text-gray-500 text-sm">Kerjasama dengan ekspedisi terbaik agar buku sampai dengan aman dan cepat.</p>
                 </div>
 
+                {{-- Card 3: Layanan Ramah --}}
                 <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition text-center group">
                     <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-headset text-2xl"></i>
@@ -202,15 +217,20 @@
         </div>
     </div>
 
+    {{-- Section: CTA WhatsApp --}}
     <div class="py-20 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            {{-- Box dengan gradient background --}}
             <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-3xl p-10 md:p-16 shadow-2xl text-white relative overflow-hidden">
                 <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
                 <div class="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
 
+                {{-- Judul CTA --}}
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">Butuh Bantuan atau Rekomendasi?</h2>
+                {{-- Deskripsi CTA --}}
                 <p class="text-green-100 mb-8 text-lg">Admin kami siap menjawab pertanyaan Anda seputar stok, pengiriman, atau curhat buku.</p>
                 
+                {{-- Tombol WhatsApp --}}
                 <a href="https://wa.me/6287784728925?text=Halo%20Admin%20GIEBOOK,%20saya%20mau%20tanya..." 
                    target="_blank"
                    class="inline-flex items-center gap-3 bg-white text-green-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-green-50 hover:scale-105 transition-all shadow-lg">
@@ -221,17 +241,23 @@
         </div>
     </div>
 
+    {{-- Section: Form Contact --}}
     <div class="py-16 md:py-24 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            {{-- Container form yang dibagi 2 kolom --}}
             <div class="bg-white rounded-2xl md:rounded-[2rem] shadow-2xl overflow-hidden border border-indigo-100/50 flex flex-col md:flex-row relative z-10">
                 
-                <!-- Let's Add a Left Info Section -->
+                {{-- Sebelah kiri: Info kontak --}}
                 <div class="w-full md:w-5/12 bg-indigo-600 p-8 sm:p-10 lg:p-12 text-white flex flex-col justify-between relative overflow-hidden">
                     <div class="relative z-10">
+                        {{-- Judul form section --}}
                         <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 sm:mb-4 text-white">Mari Berbincang!</h2>
+                        {{-- Deskripsi form --}}
                         <p class="text-indigo-100 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8">Punya pertanyaan, saran, atau peluang kerja sama? Jangan ragu tinggalkan pesan. Tim admin kami akan segera merespons.</p>
                         
+                        {{-- Info kontak --}}
                         <div class="space-y-4 sm:space-y-6 mt-6 sm:mt-8 flex flex-row md:flex-col gap-4 md:gap-0 flex-wrap">
+                            {{-- Email --}}
                             <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
                                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-500/50 rounded-full flex items-center justify-center backdrop-blur-sm shrink-0">
                                     <i class="fa-solid fa-envelope text-lg sm:text-xl"></i>
@@ -241,6 +267,7 @@
                                     <p class="font-medium tracking-wide text-sm sm:text-base">admin@tokobuku.com</p>
                                 </div>
                             </div>
+                            {{-- Alamat --}}
                             <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
                                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-500/50 rounded-full flex items-center justify-center backdrop-blur-sm shrink-0">
                                     <i class="fa-solid fa-location-dot text-lg sm:text-xl"></i>

@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
 
 
 use App\Http\Controllers\Front\BookStoreController;
@@ -54,7 +55,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
+    // Kategori management
+    Route::resource('categories', CategoryController::class);
     
+    // Book management
     Route::resource('books', BookController::class);
 
     
